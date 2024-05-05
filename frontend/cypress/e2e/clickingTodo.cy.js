@@ -51,7 +51,8 @@ describe('Logging into the system', () => {
           body: { ...itemJson, taskid: taskid }
         }).then((response) => {
             activeItem = {
-              id: response.body._id.$oid
+              id: response.body._id.$oid,
+              title : response.body._id.description
             };
             return response.body._id.$oid;
         });
@@ -67,7 +68,8 @@ describe('Logging into the system', () => {
           body: { ...itemJson, taskid: taskid}
         }).then((response) => {
             notActiveItem = {
-              id: response.body._id.$oid
+              id: response.body._id.$oid,
+              title : response.body._id.description
             };
             return response.body._id.$oid;
         });
@@ -90,8 +92,7 @@ describe('Logging into the system', () => {
 
   it('click checked', () => {
     cy.get('.container-element').first().click();
-    cy.contains('.todo-item', 'Watch video')
-    .find('.checker.unchecked')
+    cy.get('.todo-list').find('.checker.unchecked')
     .click()
     .should('have.class', 'checked');
   })
