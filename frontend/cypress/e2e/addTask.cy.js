@@ -52,15 +52,23 @@ describe('Logging into the system', () => {
   })
 
   it('todo list remains unchanged after adding task with no text desc', () => {
-    cy.get('.container-element').first().click()
-    cy.get('.popup').should('be.visible')
+    cy.get('.container-element').first().click();
+    cy.get('.popup').should('be.visible');
+  
+    // Get the initial state of the todo list
     cy.get('.todo-list').then($element => {
       const initialState = $element.text();
-      cy.get('.todo-list').find('input[type="submit"]').click()
+  
+      // Check if the submit button is disabled
+      cy.get('.todo-list').find('input[type="submit"]').should('be.disabled');
+  
+      // Click the submit button without entering any text
+      cy.get('.todo-list').find('input[type="submit"]').click({ force: true });
+  
+      // Check that the todo list remains unchanged
       cy.get('.todo-list').invoke('text').should('equal', initialState);
     });
-
-  })
+  });
 
   after(function () {
     // clean up by deleting the user from the database
