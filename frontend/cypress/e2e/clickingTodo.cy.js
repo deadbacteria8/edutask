@@ -124,8 +124,6 @@ describe('Logging into the system', () => {
     cy.wait(500);
   });
 
-
-
   afterEach(function () {
     // clean up by deleting the user from the database
 

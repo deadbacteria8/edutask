@@ -42,7 +42,7 @@ describe('Logging into the system', () => {
     cy.get('.popup').should('be.visible')
   })
 
-  it('should add task', () => {
+  it('should add todo-item', () => {
     cy.get('.container-element').first().click()
     cy.get('.popup').should('be.visible')
 
