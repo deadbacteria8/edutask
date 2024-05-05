@@ -1,17 +1,9 @@
 describe('Logging into the system', () => {
   // define variables that we need on multiple occasions
-  let user = {
-    id : null
-  }
-  let task = {
-    id : null
-  }
-  let activeItem = {
-    id : null
-  }
-  let notActiveItem = {
-    id : null
-  }
+  let user
+  let task
+  let activeItem
+  let notActiveItem
   before(function () {
 
     //those functions does not explicitly need to be present here but i did so because i didnt feel like i had a better place to put them
@@ -34,7 +26,7 @@ describe('Logging into the system', () => {
     }
 
     function createTask(user_id) {
-      return cy.fixture('task.json').then((taskJson) => {
+      return cy.fixture('Task.json').then((taskJson) => {
         return cy.request({
           method: 'POST',
           url: 'http://localhost:5000/tasks/create',
@@ -42,10 +34,10 @@ describe('Logging into the system', () => {
           body: { ...taskJson, userid: user_id }
         }).then((response) => {
             task = {
-              id : response.body._id.$oid,
+              id : response.body[0]._id.$oid,
               taskTitle : taskJson.title
             };
-            return response.body._id.$oid;
+            return response.body[0]._id.$oid;
         });
       });
     }
@@ -82,24 +74,22 @@ describe('Logging into the system', () => {
       });
     }
 
-    cy.wrap(createUser()).then((uid) => {
-      cy.wrap(createTask(uid)).then((taskid) => {
-        cy.wrap(createActiveItem(taskid)).then(() => {
-          cy.wrap(createNotActiveItem(taskid)).then(() => {
-          });
-        });
-      });
-    });
+    createUser().then((uid) => createTask(uid).then((taskid) => {
+      createNotActiveItem(taskid).then(() => {
+        return createActiveItem(taskid);
+      })
+    }));
   })
 
   beforeEach(function () {
     cy.visit('/')
-    cy.get('#email').type(email)
+    cy.get('#email').type(user.email)
     cy.get('form').submit()
     cy.get('h1').should('contain.text', 'Your tasks, ' + user.name)
   })
 
   it('click checked', () => {
+    cy.get('.container-element').first().click();
     cy.contains('.todo-item', 'Watch video')
     .find('.checker.unchecked')
     .click()
