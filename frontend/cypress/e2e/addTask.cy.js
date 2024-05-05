@@ -55,17 +55,12 @@ describe('Logging into the system', () => {
     cy.get('.container-element').first().click();
     cy.get('.popup').should('be.visible');
   
-    // Get the initial state of the todo list
+    // gets initial state
     cy.get('.todo-list').then($element => {
       const initialState = $element.text();
-  
-      // Check if the submit button is disabled
       cy.get('.todo-list').find('input[type="submit"]').should('be.disabled');
-  
-      // Click the submit button without entering any text
       cy.get('.todo-list').find('input[type="submit"]').click({ force: true });
-  
-      // Check that the todo list remains unchanged
+
       cy.get('.todo-list').invoke('text').should('equal', initialState);
     });
   });
