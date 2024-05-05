@@ -90,39 +90,55 @@ describe('Logging into the system', () => {
     cy.get('h1').should('contain.text', 'Your tasks, ' + user.name)
   })
 
-  it('click checked', () => {
-    cy.wait(500);
-  
+  it('should remove item', () => {
+    cy.wait(500)
     cy.get('.container-element').first().click();
-    cy.wait(500);
+    cy.wait(500)
     
-    cy.get('.todo-list')
-      .find('.todo-item')
-      .contains('WatchVideo')
-      .parent()
-      .find('.checker')
-      .click();
-  
-    cy.wait(500);
-  
-    cy.get('.todo-list')
-      .find('.todo-item')
-      .contains('WatchVideo')
-      .parent()
-      .find('.checker')
-      .should('have.class', 'unchecked')
-      .click();
+    cy.get('.todo-list').find('.todo-item').first().find('.remover')
+    .click()
 
+    cy.wait(500)
     cy.get('.todo-list')
     .find('.todo-item')
     .contains('WatchVideo')
-    .parent()
-    .find('.checker')
-    .should('have.class', 'checked')
-    .click();
+    .should('not.exist');
+
+  })
+
+  // it('click checked', () => {
+  //   cy.wait(500);
   
-    cy.wait(500);
-  });
+  //   cy.get('.container-element').first().click();
+  //   cy.wait(500);
+    
+  //   cy.get('.todo-list')
+  //     .find('.todo-item')
+  //     .contains('WatchVideo')
+  //     .parent()
+  //     .find('.checker')
+  //     .click();
+  
+  //   cy.wait(500);
+  
+  //   cy.get('.todo-list')
+  //     .find('.todo-item')
+  //     .contains('WatchVideo')
+  //     .parent()
+  //     .find('.checker')
+  //     .should('have.class', 'unchecked')
+  //     .click();
+
+  //   cy.get('.todo-list')
+  //   .find('.todo-item')
+  //   .contains('WatchVideo')
+  //   .parent()
+  //   .find('.checker')
+  //   .should('have.class', 'checked')
+  //   .click();
+  
+  //   cy.wait(500);
+  // });
 
 
 
