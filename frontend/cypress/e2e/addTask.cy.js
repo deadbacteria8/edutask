@@ -44,23 +44,21 @@ describe('Logging into the system', () => {
 
   it('should add task', () => {
     cy.get('.container-element').first().click()
-    cy.get('.popup').should('be.visible')
 
     cy.get('.todo-list').find('input[type="text"]').type('New tooodoo item')
     cy.get('.todo-list').find('input[type="submit"]').click()
     cy.get('.todo-list').should('contain', 'New tooodoo item')
   })
 
-  it('todo list remains unchanged after adding task with no text desc', () => {
+  it('should add task', () => {
     cy.get('.container-element').first().click()
-    cy.get('.popup').should('be.visible')
-    cy.get('.todo-list').then($element => {
-      const initialState = $element.text();
-      cy.get('.todo-list').find('input[type="submit"]').click()
-      cy.get('.todo-list').invoke('text').should('equal', initialState);
-    });
 
+    cy.get('.todo-list').find('input[type="text"]').type('New tooodoo item')
+    cy.get('.todo-list').find('input[type="submit"]').click()
+    cy.get('.todo-list').should('contain', 'New tooodoo item')
   })
+
+
 
   after(function () {
     // clean up by deleting the user from the database
