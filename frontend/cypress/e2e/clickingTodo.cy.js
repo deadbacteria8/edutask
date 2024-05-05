@@ -26,7 +26,7 @@ describe('Logging into the system', () => {
     }
 
     function createTask(user_id) {
-      return cy.fixture('Task.json').then((taskJson) => {
+      return cy.fixture('CreateTask.json').then((taskJson) => {
         return cy.request({
           method: 'POST',
           url: 'http://localhost:5000/tasks/create',
