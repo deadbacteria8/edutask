@@ -4,7 +4,7 @@ describe('Logging into the system', () => {
   let task
   let activeItem
   let notActiveItem
-  before(function () {
+  beforeEach(function () {
 
     //those functions does not explicitly need to be present here but i did so because i didnt feel like i had a better place to put them
     function createUser() {
@@ -52,7 +52,7 @@ describe('Logging into the system', () => {
         }).then((response) => {
             activeItem = {
               id: response.body._id.$oid,
-              title : response.body._id.description
+              title : response.body.description
             };
             return response.body._id.$oid;
         });
@@ -69,7 +69,7 @@ describe('Logging into the system', () => {
         }).then((response) => {
             notActiveItem = {
               id: response.body._id.$oid,
-              title : response.body._id.description
+              title : response.body.description
             };
             return response.body._id.$oid;
         });
@@ -91,15 +91,30 @@ describe('Logging into the system', () => {
   })
 
   it('click checked', () => {
+    cy.wait(500);
+
     cy.get('.container-element').first().click();
-    cy.get('.todo-list').find('.checker.unchecked')
+    cy.wait(500);
+    cy.get('.todo-list')
+    .find('.todo-item')
+    .contains('WatchVideo')
+    .parent()
+    .find('.checker')
+    .click();
+
+    cy.wait(500)
+    cy.get('.todo-list')
+    .find('.todo-item')
+    .contains('WatchVideo')
+    .parent()
+    .find('.checked')
+    .should('have.class', 'checked')
     .click()
-    .should('have.class', 'checked');
   })
 
 
 
-  after(function () {
+  afterEach(function () {
     // clean up by deleting the user from the database
 
     cy.request({
