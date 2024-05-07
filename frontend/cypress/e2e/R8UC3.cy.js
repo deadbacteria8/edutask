@@ -94,7 +94,6 @@ describe('Logging into the system', () => {
     cy.wait(500)
     cy.get('.container-element').first().click();
     cy.wait(500)
-    
     cy.get('.todo-list').find('.todo-item').first().find('.remover')
     .click()
 
