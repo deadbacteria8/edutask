@@ -36,7 +36,7 @@ class TestNamespaces:
         uc = UserController(dao=mockedDAO)
 
         # TODO: patch the fullmatch method of the regex library
-        with patch('?') as mockfullmatch:
+        with patch("src.controllers.usercontroller.re.fullmatch") as mockfullmatch:
             mockfullmatch.return_value = True
 
             assert uc.get_user_by_email(email='jane.doe') == user
